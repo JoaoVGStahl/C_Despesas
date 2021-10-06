@@ -1,0 +1,26 @@
+{
+  "despesas": [
+    {
+      "id": 1,
+      "descricao": "Internet",
+      "custo": "R$109,90"
+    },
+    {
+      "id": 2,
+      "descricao": "Energia",
+      "custo": "R$89,90"
+    },
+    {
+      "descricao": "Água",
+      "custo": "R$56,90",
+      "id": 3
+    }
+  ],
+  "receitas" : [
+    {
+      "id" : 1,
+      "descriçao" : "Vendas",
+      "valor" : "R$1500,00"
+    }
+  ]
+}
