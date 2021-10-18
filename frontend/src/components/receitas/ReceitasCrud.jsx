@@ -1,10 +1,14 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'font-awesome/css/font-awesome.min.css'
 import React from 'react'
 import { Component } from 'react'
 import axios from 'axios'
+import Main from '../template/Main'
 
-const baseurl = 'http://localhost:3001/receitas'
+const headerProps ={
+    icon : 'money',
+    title : 'Receitas',
+    subtitle : 'Gerenciamento de Receitas!'
+}
+const baseUrl = 'http://localhost:3001/receitas'
 const initialState ={
     receitas : {descricao : '', valor : ''},
     list : []
@@ -12,13 +16,16 @@ const initialState ={
 export default class Receitas extends Component{
     state = {...initialState}
 
-    componenteWillMount(){
-        axios(baseurl).then(resp =>{
-            this.state({list : resp.data})
+    componentWillMount(){
+        axios(baseUrl).then(resp =>{
+            this.setState({list : resp.data})
         })
     }
+    clear(){
+        this.setState({receitas: initialState.receitas})
+    }
     remove(receitas){
-        axios.delete(`${baseurl}/${receitas.id}`)
+        axios.delete(`${baseUrl}/${receitas.id}`)
             .then(resp =>{
                 const list = this.getUpdatedList(receitas, false)
                 this.setState({list})
@@ -32,7 +39,8 @@ export default class Receitas extends Component{
     }
     updateField(event){
         const receitas = {...this.state.receitas}
-        receitas[event.taget.name] = event.target.value
+        receitas[event.target.name] = event.target.value
+        this.setState({receitas})
     }
     load(receitas){
         this.setState({receitas})
@@ -40,7 +48,7 @@ export default class Receitas extends Component{
     save(){
         const receitas = this.state.receitas
         const method = receitas.id ? 'put' : 'post'
-        const url = receitas.id ? `${baseurl}/${receitas.id}` : baseurl
+        const url = receitas.id ? `${baseUrl}/${receitas.id}` : baseUrl
 
         axios[method](url, receitas)
             .then(resp =>{
@@ -54,21 +62,21 @@ export default class Receitas extends Component{
                 <div className="row">
                     <div className="col-12 col-md-6">
                         <div className="form-group">
-                            <label>Descrição da Receita:</label>
+                            <label>Origem da Receita:</label>
                             <input type="text" className="form-control" 
                             name="descricao" 
                             value={this.state.receitas.descricao}
                             onChange={e => this.updateField(e)}
-                            placeholder="Digite a descrição da despesa"/>
+                            placeholder="Digite a origem da despesa"/>
                         </div>
                     </div>
                     <div className="col-12 col-md-6">
                         <label>Valor:</label>
                         <input type="text" className="form-control" 
-                        name="custo" 
+                        name="valor" 
                         value={this.state.receitas.valor}
                         onChange={e => this.updateField(e)}
-                        placeholder="Digite o Custo da despesa..."
+                        placeholder="Digite o Valor da receita..."
                         />
                     </div>
                     <div className="row">
@@ -95,7 +103,7 @@ export default class Receitas extends Component{
                         <tr>
                             <th>#</th>
                             <th>Descricao</th>
-                            <th>Receita</th>
+                            <th>Origem</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -108,7 +116,9 @@ export default class Receitas extends Component{
     }
     renderRows() {
         return this.state.list.map(receitas =>{
+            console.log("receitas:" + receitas)
             return(
+                
                 <tr key={receitas.id}>
                     <td>{receitas.id}</td>
                     <td>{receitas.descricao}</td>
@@ -129,10 +139,10 @@ export default class Receitas extends Component{
     }
     render() {
         return (
-            <div>
+            <Main {...headerProps}>
                 {this.renderForm()}
                 {this.renderTable()}
-            </div>
+            </Main>
 
         )
     }

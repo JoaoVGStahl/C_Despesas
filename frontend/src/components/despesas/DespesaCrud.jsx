@@ -3,6 +3,13 @@ import 'font-awesome/css/font-awesome.min.css'
 import React from 'react'
 import { Component } from 'react'
 import axios from 'axios'
+import Main from '../template/Main'
+
+const headerProps ={
+    icon : 'credit-card-alt',
+    title : 'Despesas',
+    subtitle : 'Gerenciamento de Despesas!'
+}
 
 const baseurl='http://localhost:3001/despesas'
 const initialState ={
@@ -132,10 +139,10 @@ export default class ListaDespesa extends Component {
     }
     render() {
         return (
-            <div>
+            <Main {...headerProps}>
                 {this.renderForm()}
                 {this.renderTable()}
-            </div>
+            </Main>
 
         )
     }
