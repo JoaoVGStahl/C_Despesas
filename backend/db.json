@@ -21,11 +21,6 @@
       "descricao": "Devedores",
       "valor": "R$3000",
       "id": 2
-    },
-    {
-      "descricao": "Vendas",
-      "valor": "R$5000",
-      "id": 3
     }
   ]
 }
