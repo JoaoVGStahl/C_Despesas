@@ -13,7 +13,7 @@ const headerProps ={
 
 const baseurl='http://localhost:3001/despesas'
 const initialState ={
-    despesas:{descricao: '', custo:''},
+despesas:{descricao: '', custo:''},
     list: []
 }
 
